@@ -66,6 +66,7 @@ VALIDATE $? "Installing nodejs dependences"
 cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
 VALIDATE $? "Copied backend service"
 
+
 systemctl daemon-reload &>>LOGFILE
 VALIDATE $? "Daemon reload"
 
