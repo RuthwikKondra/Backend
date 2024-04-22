@@ -8,6 +8,8 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
+echo "Please enter DB password:"
+read -s mysql_root_password
 
 VALIDATE(){
    if [ $1 -ne 0 ]
@@ -48,3 +50,36 @@ fi
 
 mkdir -p /app
 VALIDATE $? "creating app directory"
+
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOGFILE
+VALIDATE $? "Dowloading Backend code"
+
+cd /app
+rm -rf /app/*
+unzip/tmp/backend.zip &>>LOGFILE
+VALIDATE $? "Extracted backend code"
+
+npm install &>>LOGFILE
+VALIDATE $? "Installing nodejs dependences"
+
+#check your repo and path
+cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
+VALIDATE $? "Copied backend service"
+
+systemctl daemon-reload &>>LOGFILE
+VALIDATE $? "Daemon reload"
+
+systemctl start backend &>>LOGFILE
+VALIDATE $? "S6tarting Backend"
+
+systemctl enable  backend &>>LOGFILE
+VALIDATE $? "Enabiling backend"
+
+dnf install mysql -y &>LOGFILE
+VALIDATE $? "installing mysql"
+
+mysql -h mysql-server -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
+VALIDATE $? "Schema loading"
+
+systemctl restart backend &>LOGFILE
+VALIDATE $? "Restarting Backend"
