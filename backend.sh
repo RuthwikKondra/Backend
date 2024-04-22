@@ -34,7 +34,7 @@ VALIDATE $? "Disabiling default nodejs."
 dnf module enable nodejs:20 -y &>>LOGFILE
 VALIDATE $? "Enabiling nodejs:20."
 
-dnf install  nodejs:20 -y &>>LOGFILE
+dnf install nodejs -y &>>$LOGFILE
 VALIDATE $? "Starting nodejs:20"
 
 useradd expense
