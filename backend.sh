@@ -56,7 +56,7 @@ VALIDATE $? "Dowloading Backend code"
 
 cd /app
 rm -rf /app/*
-unzip/tmp/backend.zip &>>LOGFILE
+unzip /tmp/backend.zip &>>$LOGFILE
 VALIDATE $? "Extracted backend code"
 
 npm install &>>LOGFILE
