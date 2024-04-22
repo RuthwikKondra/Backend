@@ -63,7 +63,7 @@ npm install &>>LOGFILE
 VALIDATE $? "Installing nodejs dependences"
 
 #check your repo and path
-cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
+cp /home/ec2-user/Shell-Backend/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
 VALIDATE $? "Copied backend service"
 
 
@@ -71,7 +71,7 @@ systemctl daemon-reload &>>LOGFILE
 VALIDATE $? "Daemon reload"
 
 systemctl start backend &>>LOGFILE
-VALIDATE $? "S6tarting Backend"
+VALIDATE $? "Starting Backend"
 
 systemctl enable  backend &>>LOGFILE
 VALIDATE $? "Enabiling backend"
