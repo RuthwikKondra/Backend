@@ -41,6 +41,6 @@ systemctl enable backend &>>$LOGFILE
 
 dnf install mysql -y &>>$LOGFILE
 
-mysql -h backend.devops-practice.cloud -u root -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
+mysql -h 172.31.17.245 -u root -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
 
 systemctl restart backend &>>$LOGFILE
